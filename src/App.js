@@ -43,13 +43,14 @@ class App extends Component {
     let widgetScale = document.getElementById('widgetScale');
 
     widgetScale.style = "transform: scale(20, 20)";
+    
 
     let widget = document.getElementById('widget');
 
     widget.width = "7";
     widget.height = "7";
+    
     widget.style = "border: 1px solid black";
-
 
 
 

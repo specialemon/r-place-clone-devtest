@@ -1,12 +1,12 @@
 import React from 'react';
 
 const Widget = () => (
-
-    <div id="widgetScale">
-        <canvas id="widget">
-        </canvas>
+    <div id="widgetContain">
+        <div id="widgetScale">
+            <canvas id="widget">
+            </canvas>
+        </div>
     </div>
-
 )
 
 

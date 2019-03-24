@@ -1,19 +1,25 @@
 #scaleDiv {
-    transform-origin: top left;
+    transform-origin: 1px 1px;
     overflow: auto;
 
 }
+
 
 #widgetScale {
-    transform-origin: top left;
-    overflow: auto;
+    width: 20%;
+    transform-origin: 1px 1px;
 }
 
-#testBox {
-    height: 200px;
-    width: 200px;
-    background: black;
+#widgetContain {
+    float: left;
+    margin-left: 5%;
 }
+
+#coord {
+    margin-left: 5%;
+}
+
+
 
 canvas {
     image-rendering: pixelated;
@@ -24,5 +30,5 @@ canvas {
     width: 75%;
     overflow: auto;
     float: left;
-    margin: 0;
+    margin: 0 0;
 }
