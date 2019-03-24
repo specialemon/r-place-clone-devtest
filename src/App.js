@@ -88,7 +88,6 @@ class App extends Component {
     let scaleDiv = document.getElementById('scaleDiv');
 
 
-
     /////////////////////////////////////////////////////////////////
 
 
@@ -176,6 +175,7 @@ class App extends Component {
         let blue = this.state.widget[index+2];
         index += 4;
         c.fillStyle = `rgb(${red},${green},${blue})`;
+        // c.fillStyle = "rgb(255,176,59)";
         c.fillRect(x,y,1,1);
       }
     }
@@ -187,6 +187,14 @@ class App extends Component {
 
     let x = this.state.currx - 3;
     let y = this.state.curry - 3;
+
+    if( x <= 1) {
+      x = 1;
+    }
+
+    if (y <= 1) {
+      y = 1;
+    }
 
     let colors = c.getImageData(x,y,7,7).data.slice();
 

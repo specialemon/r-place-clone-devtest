@@ -1,13 +1,12 @@
 #scaleDiv {
-    transform-origin: 1px 1px;
+    transform-origin: top left;
     overflow: auto;
-
 }
 
 
 #widgetScale {
     width: 20%;
-    transform-origin: 1px 1px;
+    transform-origin: top left;
 }
 
 #widgetContain {
