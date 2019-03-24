@@ -130,8 +130,8 @@ class App extends Component {
       this.setState({
         mousex: e.clientX - rect.left,
         mousey: e.clientY - rect.top,
-        chx: Math.floor(e.clientX - rect.left),
-        chy: Math.floor(e.clientY - rect.top)
+        chx: Math.floor((e.clientX - rect.left) / this.state.currScale),
+        chy: Math.floor((e.clientY - rect.top) / this.state.currScale)
       })
     });
 
