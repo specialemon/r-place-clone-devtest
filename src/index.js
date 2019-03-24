@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { SSL_OP_TLS_ROLLBACK_BUG } from 'constants';
 
 ReactDOM.render(<App />, document.getElementById('root'));
 

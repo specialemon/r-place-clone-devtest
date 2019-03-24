@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import Widget from './components/Widget';
 
 
 class App extends Component {
@@ -10,13 +10,14 @@ class App extends Component {
     mousey: 0,
     currScale: 1,
     currx: 0,
-    curry: 0
+    curry: 0,
+    widget: []
   }
 
   componentDidMount() {
     ////////////////////canvas//////////////////////////
 
-    let canvas = document.querySelector('canvas');
+    let canvas = document.getElementById('mainCanvas');
 
     canvas.width = "1000";
     canvas.height = "800";
@@ -24,13 +25,41 @@ class App extends Component {
 
     let c = canvas.getContext('2d');
 
+    c.beginPath();
+    c.rect(1,1,1000,800);
+    c.fillStyle = "white";
+    c.fill();
+
+
 
     c.fillStyle = "rgb(255,176,59)";
     c.fillRect(10, 10, 1, 1);
 
-    let testData = c.getImageData(10,10,1,1);
+    let testData = c.getImageData(10, 10, 7, 7).data;
     console.log(testData);
 
+
+    ///////////////////////widget////////////////////////////////////////
+    let widgetScale = document.getElementById('widgetScale');
+
+    widgetScale.style = "transform: scale(10, 10)";
+
+    let widget = document.getElementById('widget');
+
+    widget.width = "7";
+    widget.height = "7";
+    widget.style = "border: 1px solid black";
+
+
+
+
+
+
+
+
+
+
+    //////////////////////////api////////////////////////////////////
 
     // axios.get('/api/canvas', (req, res) => {
     //   for(let pixel in res.data.map) {
@@ -48,6 +77,7 @@ class App extends Component {
     // })
 
 
+
     ////////////////////////scale div/////////////////////////////
 
     let container = document.getElementById('container');
@@ -55,6 +85,7 @@ class App extends Component {
 
 
     let scaleDiv = document.getElementById('scaleDiv');
+
 
 
     /////////////////////////////////////////////////////////////////
@@ -125,7 +156,44 @@ class App extends Component {
       this.setState({
         currx: currx,
         curry: curry
+      }, () => {
+        this.setWidgetColor();
       })
+    })
+  }
+
+  renderWidget () {
+    let canvas = document.getElementById('widget');
+    let c = canvas.getContext('2d');
+    let index = 0;
+
+
+    for(let y = 1; y < 8; y++) {
+      for(let x = 1; x < 8; x++) {
+        let red = this.state.widget[index];
+        let green = this.state.widget[index+1];
+        let blue = this.state.widget[index+2];
+        index += 4;
+        c.fillStyle = `rgb(${red},${green},${blue})`;
+        c.fillRect(x,y,1,1);
+      }
+    }
+  }
+
+  setWidgetColor () {
+    let canvas = document.getElementById('mainCanvas');
+    let c = canvas.getContext('2d');
+
+    let x = this.state.currx - 3;
+    let y = this.state.curry - 3;
+
+    let colors = c.getImageData(x,y,7,7).data.slice();
+
+    this.setState({
+      widget: colors
+    }, () => {
+      this.renderWidget();
+      console.log(this.state.widget);
     })
   }
 
@@ -145,15 +213,13 @@ class App extends Component {
       <div id="container">
         <div id="containment">
           <div className="canvasDiv" id="scaleDiv">
-            <canvas>
+            <canvas id="mainCanvas">
 
             </canvas>
           </div>
         </div>
-        <div id="testBox">
-        </div>
+        <Widget />
       </div>
-
     );
   }
 }

@@ -4,6 +4,11 @@
 
 }
 
+#widgetScale {
+    transform-origin: top left;
+    overflow: auto;
+}
+
 #testBox {
     height: 200px;
     width: 200px;
