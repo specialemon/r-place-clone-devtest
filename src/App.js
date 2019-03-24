@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Widget from './components/Widget';
-
+import Coord from './components/Coord';
 
 class App extends Component {
 
@@ -42,7 +42,7 @@ class App extends Component {
     ///////////////////////widget////////////////////////////////////////
     let widgetScale = document.getElementById('widgetScale');
 
-    widgetScale.style = "transform: scale(10, 10)";
+    widgetScale.style = "transform: scale(20, 20)";
 
     let widget = document.getElementById('widget');
 
@@ -129,7 +129,9 @@ class App extends Component {
       let rect = e.target.getBoundingClientRect();
       this.setState({
         mousex: e.clientX - rect.left,
-        mousey: e.clientY - rect.top
+        mousey: e.clientY - rect.top,
+        chx: Math.floor(e.clientX - rect.left),
+        chy: Math.floor(e.clientY - rect.top)
       })
     });
 
@@ -146,8 +148,6 @@ class App extends Component {
 
     this.setState({
       mousedown: true,
-      currx: currx,
-      curry: curry,
       mousex: mousex,
       mousey: mousey
     }, () => {
@@ -214,10 +214,10 @@ class App extends Component {
         <div id="containment">
           <div className="canvasDiv" id="scaleDiv">
             <canvas id="mainCanvas">
-
             </canvas>
           </div>
         </div>
+        <Coord chx={this.state.chx} chy={this.state.chy} />
         <Widget />
       </div>
     );

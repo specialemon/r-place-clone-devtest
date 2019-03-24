@@ -23,4 +23,6 @@ canvas {
 #containment {
     width: 75%;
     overflow: auto;
+    float: left;
+    margin: 0;
 }
