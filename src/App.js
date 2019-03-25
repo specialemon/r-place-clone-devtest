@@ -26,7 +26,7 @@ class App extends Component {
     let c = canvas.getContext('2d');
 
     c.beginPath();
-    c.rect(1,1,1000,800);
+    c.rect(1, 1, 1000, 800);
     c.fillStyle = "white";
     c.fill();
 
@@ -43,13 +43,13 @@ class App extends Component {
     let widgetScale = document.getElementById('widgetScale');
 
     widgetScale.style = "transform: scale(20, 20)";
-    
+
 
     let widget = document.getElementById('widget');
 
     widget.width = "7";
     widget.height = "7";
-    
+
     widget.style = "border: 1px solid black";
 
 
@@ -97,8 +97,13 @@ class App extends Component {
         if (this.state.currScale < 20) {
           this.setState({
             currScale: this.state.currScale + 1
+          }, () => {
+            let container = document.getElementById('containment');
+            // let offsetx = 1000/this.state.currScale;
+            // let offsety = 800/this.state.currScale;
+            scaleDiv.style = `transform: scale(${this.state.currScale},${this.state.currScale})`;
+            container.scroll(this.state.chx * this.state.currScale, this.state.chy * this.state.currScale);
           })
-          scaleDiv.style = `transform: scale(${this.state.currScale},${this.state.currScale})`;
         }
         console.log('scrolling up');
       }
@@ -108,6 +113,7 @@ class App extends Component {
             currScale: this.state.currScale - 1
           }, () => {
             scaleDiv.style = `transform: scale(${this.state.currScale},${this.state.currScale})`;
+            container.scroll(this.state.chx * this.state.currScale, this.state.chy * this.state.currScale);
           })
         }
         console.log('scrolling down');
@@ -162,33 +168,33 @@ class App extends Component {
     })
   }
 
-  renderWidget () {
+  renderWidget() {
     let canvas = document.getElementById('widget');
     let c = canvas.getContext('2d');
     let index = 0;
 
 
-    for(let y = 1; y < 8; y++) {
-      for(let x = 1; x < 8; x++) {
+    for (let y = 1; y < 8; y++) {
+      for (let x = 1; x < 8; x++) {
         let red = this.state.widget[index];
-        let green = this.state.widget[index+1];
-        let blue = this.state.widget[index+2];
+        let green = this.state.widget[index + 1];
+        let blue = this.state.widget[index + 2];
         index += 4;
         c.fillStyle = `rgb(${red},${green},${blue})`;
         // c.fillStyle = "rgb(255,176,59)";
-        c.fillRect(x,y,1,1);
+        c.fillRect(x, y, 1, 1);
       }
     }
   }
 
-  setWidgetColor () {
+  setWidgetColor() {
     let canvas = document.getElementById('mainCanvas');
     let c = canvas.getContext('2d');
 
     let x = this.state.currx - 3;
     let y = this.state.curry - 3;
 
-    if( x <= 1) {
+    if (x <= 1) {
       x = 1;
     }
 
@@ -196,7 +202,7 @@ class App extends Component {
       y = 1;
     }
 
-    let colors = c.getImageData(x,y,7,7).data.slice();
+    let colors = c.getImageData(x, y, 7, 7).data.slice();
 
     this.setState({
       widget: colors
