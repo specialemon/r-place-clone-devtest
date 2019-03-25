@@ -11,7 +11,9 @@ class App extends Component {
     currScale: 1,
     currx: 0,
     curry: 0,
-    widget: []
+    widget: [],
+    scrollx: 0,
+    scrolly: 0
   }
 
   componentDidMount() {
@@ -77,6 +79,11 @@ class App extends Component {
     //   }
     // })
 
+    document.addEventListener('mouseup', e => {
+      e.preventDefault();
+      this.mouseup();
+    });
+
 
 
     ////////////////////////scale div/////////////////////////////
@@ -103,7 +110,11 @@ class App extends Component {
             // let offsety = 800/this.state.currScale;
             scaleDiv.style = `transform: scale(${this.state.currScale},${this.state.currScale})`;
             container.scroll(this.state.chx * this.state.currScale, this.state.chy * this.state.currScale);
-          })
+            this.setState({
+              scrollx : this.state.chx * this.state.currScale,
+              scrolly : this.state.chy * this.state.currScale
+            });
+          });
         }
         console.log('scrolling up');
       }
@@ -114,7 +125,11 @@ class App extends Component {
           }, () => {
             scaleDiv.style = `transform: scale(${this.state.currScale},${this.state.currScale})`;
             container.scroll(this.state.chx * this.state.currScale, this.state.chy * this.state.currScale);
-          })
+            this.setState({
+              scrollx : this.state.chx * this.state.currScale,
+              scrolly : this.state.chy * this.state.currScale
+            });
+          });
         }
         console.log('scrolling down');
       }
@@ -133,18 +148,44 @@ class App extends Component {
 
     canvas.addEventListener('mousemove', e => {
       let rect = e.target.getBoundingClientRect();
+      let container = document.getElementById('containment');
       this.setState({
         mousex: e.clientX - rect.left,
         mousey: e.clientY - rect.top,
         chx: Math.floor((e.clientX - rect.left) / this.state.currScale),
         chy: Math.floor((e.clientY - rect.top) / this.state.currScale)
+      }, () => {
+        if(this.state.mousedown && this.state.currScale !== 1) {
+          let startx = this.state.currx * this.state.currScale;
+          let starty = this.state.curry * this.state.currScale;
+          container.scroll(startx - e.offsetX, starty - e.offsetY);
+          console.log(e.movementX);
+          // if(e.movementX <  0){
+          //   this.setState({
+          //     scrollx : this.state.mousex + e.offsetX
+          //   });
+          // }
+          // if(e.movementX > 0) {
+          //   this.setState({
+          //     scrollx : this.state.mousex - e.offsetX
+          //   });
+          // }
+          // if(e.movementY < 0) {
+          //   this.setState({
+          //     scrolly : this.state.mousey + e.offsetY
+          //   });
+          // }
+          // if(e.movementY > 0) {
+          //   this.setState({
+          //     scrolly: this.state.mousey + e.offsetY
+          //   })
+          // }
+        }
       })
     });
 
 
     ////////////////////////////////////////////////
-
-
   }
 
   mousedown(mousex, mousey) {
@@ -198,8 +239,16 @@ class App extends Component {
       x = 1;
     }
 
+    if ( x >= 993) {
+      x = 993
+    }
+
     if (y <= 1) {
       y = 1;
+    }
+
+    if (y >= 793) {
+      y = 793
     }
 
     let colors = c.getImageData(x, y, 7, 7).data.slice();
